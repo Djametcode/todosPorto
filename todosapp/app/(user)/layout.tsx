@@ -20,7 +20,7 @@ export default function UserRootLandingLayout({
   const getCurrentUser = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v18/todos/account/get-current",
+        "https://todos-porto-backend.vercel.app/api/v18/todos/account/get-current",
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,

@@ -20,7 +20,7 @@ export default function LandingComponent() {
   const getCurrentUser = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v18/todos/account/get-my-todo",
+        "https://todos-porto-backend.vercel.app/api/v18/todos/account/get-my-todo",
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
@@ -38,7 +38,7 @@ export default function LandingComponent() {
   const finishTodos = async (todoId: string) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v18/todos/origin/finish-todo/${todoId}`,
+        `https://todos-porto-backend.vercel.app/api/v18/todos/origin/finish-todo/${todoId}`,
         {},
         {
           headers: {
@@ -56,7 +56,7 @@ export default function LandingComponent() {
   const unfinishTodos = async (todoId: string) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v18/todos/origin/unfinish-todo/${todoId}`,
+        `https://todos-porto-backend.vercel.app/api/v18/todos/origin/unfinish-todo/${todoId}`,
         {},
         {
           headers: {

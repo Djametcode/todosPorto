@@ -35,7 +35,7 @@ export default function LoginComponent() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v18/todos/register",
+        "https://todos-porto-backend.vercel.app/api/v18/todos/register",
         {
           username: username,
           email: email,
