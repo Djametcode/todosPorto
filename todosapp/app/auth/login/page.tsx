@@ -3,17 +3,17 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function LoginComponent() {
-  const [username, setUsername] = useState<string>("");
+  const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  console.log(email);
+  console.log(password);
 
   const handleChange = (type: string, data: string) => {
-    if (type === "username") {
-      setUsername(data);
-    }
-
     if (type === "email") {
       setEmail(data);
     }
@@ -26,56 +26,44 @@ export default function LoginComponent() {
   const resetField = () => {
     setEmail("");
     setPassword("");
-    setUsername("");
   };
 
-  const registerUser = async (e: React.FormEvent) => {
+  const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v18/todos/register",
+        "http://localhost:3000/api/v18/todos/login",
         {
-          username: username,
           email: email,
           password: password,
         }
       );
-      const result = await response.data;
-      console.log(result);
+      const result: { token: string } = await response.data;
+      Cookies.set("token", result.token);
+
       resetField();
+      console.log(result);
+      router.push("/landing");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
-    <div className=" flex flex-col gap-8">
+    <div className=" flex flex-col gap-10">
       <form className=" font-figtree flex flex-col w-[375px] gap-5" action="">
         <div className=" flex flex-col gap-2">
           <label className=" text-sm" htmlFor="">
-            Username
-          </label>
-          <input
-            value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleChange("username", e.target.value)
-            }
-            className=" bg-slate-50 border p-3 rounded-lg focus:outline-none placeholder:text-sm text-sm"
-            type="text"
-            placeholder="Username"
-          />
-        </div>
-        <div className=" flex flex-col gap-2">
-          <label className=" text-sm" htmlFor="">
-            Email
+            Continue with email
           </label>
           <input
             value={email}
+            className=" bg-slate-50 border p-3 rounded-lg focus:outline-none placeholder:text-sm text-sm"
+            type="text"
+            placeholder="Enter your email"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChange("email", e.target.value)
             }
-            className=" bg-slate-50 border p-3 rounded-lg focus:outline-none placeholder:text-sm text-sm"
-            type="text"
-            placeholder="Email"
           />
         </div>
         <div className=" flex flex-col gap-2">
@@ -84,20 +72,20 @@ export default function LoginComponent() {
           </label>
           <input
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              handleChange("password", e.target.value)
-            }
             className=" bg-slate-50 border p-3 rounded-lg focus:outline-none placeholder:text-sm text-sm"
             type="password"
             placeholder="Enter your password"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChange("password", e.target.value)
+            }
           />
         </div>
         <div className=" flex items-center justify-center">
           <button
-            onClick={registerUser}
+            onClick={(e) => loginHandler(e)}
             className=" bg-slate-50 p-2 rounded-lg w-[100px] border text-sm"
           >
-            Sign Up
+            Login
           </button>
         </div>
       </form>
@@ -108,7 +96,7 @@ export default function LoginComponent() {
       </div>
       <div className=" flex items-center gap-3 p-3 justify-center rounded-lg bg-slate-50 border">
         <FcGoogle size={25} />
-        <p className=" text-sm">Sign up With Google</p>
+        <p className=" text-sm">Sign in With Google</p>
       </div>
     </div>
   );

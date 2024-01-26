@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAccount = exports.updateAvatar = exports.loginUser = exports.registerUser = void 0;
+exports.getMyTodos = exports.getCurrentUser = exports.deleteAccount = exports.updateAvatar = exports.loginUser = exports.registerUser = void 0;
 const hashPassword_1 = require("../helper/hashPassword");
 const userModel_1 = require("../model/userModel");
 const passwordChecker_1 = require("../helper/passwordChecker");
@@ -109,3 +109,32 @@ const deleteAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteAccount = deleteAccount;
+const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.userId;
+    try {
+        const user = yield userModel_1.userModel.findOne({ _id: userId }).select(["username", "email", "avatar", "todos"]);
+        if (!user) {
+            return res.status(401).json({ msg: "Token invalid" });
+        }
+        return res.status(200).json({ msg: "success", user });
+    }
+    catch (error) {
+        return res.status(501).json({ msg: "Internal server error" });
+    }
+});
+exports.getCurrentUser = getCurrentUser;
+const getMyTodos = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.userId;
+    try {
+        const user = yield userModel_1.userModel.findOne({ _id: userId }).select(["username", "email", "avatar", "todos"]);
+        if (!user) {
+            return res.status(401).json({ msg: "Token invalid" });
+        }
+        const todos = yield todosModel_1.todosModel.find({ createdBy: user._id });
+        return res.status(200).json({ msg: "success", todos });
+    }
+    catch (error) {
+        return res.status(501).json({ msg: "Internal server error" });
+    }
+});
+exports.getMyTodos = getMyTodos;

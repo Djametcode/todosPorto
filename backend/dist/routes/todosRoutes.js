@@ -11,4 +11,6 @@ const route = express_1.default.Router();
 route.post('/create-todos', auth_1.authMiddleware, todosController_1.createTodos);
 route.patch('/update-todos/:id', auth_1.authMiddleware, todosController_1.updateTodos);
 route.delete('/delete-todos/:id', auth_1.authMiddleware, todosController_1.deleteTodos);
+route.put("/finish-todo/:id", auth_1.authMiddleware, todosController_1.finishTodo);
+route.put("/unfinish-todo/:id", auth_1.authMiddleware, todosController_1.cancleFinishTodo);
 exports.todosRoute = route;

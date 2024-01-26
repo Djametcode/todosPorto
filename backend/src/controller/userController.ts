@@ -122,3 +122,38 @@ export const deleteAccount = async (req: Request, res: Response) => {
         return res.status(501).json({ msg: "Internal server error" })
     }
 }
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+    const userId = req.user.userId
+
+    try {
+        const user = await userModel.findOne({ _id: userId }).select(["username", "email", "avatar", "todos"])
+
+        if (!user) {
+            return res.status(401).json({ msg: "Token invalid" })
+        }
+
+        return res.status(200).json({ msg: "success", user })
+    } catch (error) {
+        return res.status(501).json({ msg: "Internal server error" })
+    }
+}
+
+export const getMyTodos = async (req: Request, res: Response) => {
+    const userId = req.user.userId
+
+    try {
+        const user = await userModel.findOne({ _id: userId }).select(["username", "email", "avatar", "todos"])
+
+        if (!user) {
+            return res.status(401).json({ msg: "Token invalid" })
+        }
+
+        const todos = await todosModel.find({ createdBy: user._id })
+
+        return res.status(200).json({ msg: "success", todos })
+
+    } catch (error) {
+        return res.status(501).json({ msg: "Internal server error" })
+    }
+}

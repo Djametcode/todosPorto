@@ -11,4 +11,6 @@ const auth_1 = require("../middleware/auth");
 const route = express_1.default.Router();
 route.patch('/update-avatar', auth_1.authMiddleware, multer_1.upload.single('avatar'), userController_1.updateAvatar);
 route.delete('/delete-account', auth_1.authMiddleware, userController_1.deleteAccount);
+route.get("/get-current", auth_1.authMiddleware, userController_1.getCurrentUser);
+route.get('/get-my-todo', auth_1.authMiddleware, userController_1.getMyTodos);
 exports.userRoutes = route;
