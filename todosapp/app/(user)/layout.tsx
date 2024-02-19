@@ -55,14 +55,15 @@ export default function UserRootLandingLayout({
                 className=" flex flex-col items-center w-full gap-16 pt-16 font-figtree"
               >
                 <div className=" flex items-center flex-col gap-3 text-black">
-                  <div className=" bg-slate-200 w-[50px] h-[50px] rounded-full">
-                    <Image
-                      className=" w-full h-full object-cover"
-                      src={item.avatar}
-                      width={20}
-                      height={20}
-                      alt="avatar"
-                    />
+                  <div className=" bg-slate-200 w-[70px] h-[70px] rounded-full">
+                    {item.avatar !== "" ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        alt="avatar"
+                        src={item.avatar}
+                        className=" w-full h-full rounded-full object-cover"
+                      />
+                    ) : null}
                   </div>
                   <p className=" text-sm">Edit Avatar</p>
                 </div>
@@ -106,19 +107,20 @@ export default function UserRootLandingLayout({
           <>
             <div key={item._id} className=" w-full h-full  pl-6 pr-6">
               <div className=" flex justify-between  font-figtree h-16 items-center">
-                <Image
-                  src={item.avatar}
-                  width={40}
-                  height={40}
-                  alt="avatar"
-                  className=" bg-black rounded-xl"
-                />
+                {item.avatar !== "" ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    alt="avatar"
+                    src={item.avatar}
+                    className=" w-[45px] h-[45px] rounded-2xl object-cover"
+                  />
+                ) : null}
                 <h1>Hello {item.username}</h1>
                 <div
                   onClick={() => setNavbar(!navbar)}
                   className=" cursor-pointer bg-slate-50 p-1 rounded-xl"
                 >
-                  <GiHamburgerMenu size={27} />
+                  <GiHamburgerMenu size={30} />
                 </div>
               </div>
               {children}

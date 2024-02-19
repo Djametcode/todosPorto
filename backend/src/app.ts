@@ -10,7 +10,7 @@ import { userRoutes } from './routes/userRoutes'
 import { todosRoute } from './routes/todosRoutes'
 
 cloudinary.config({
-    api_key: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
     cloud_name: process.env.CLOUD_NAME
 })

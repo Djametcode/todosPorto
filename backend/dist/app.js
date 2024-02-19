@@ -22,7 +22,7 @@ const cloudinary_1 = require("cloudinary");
 const userRoutes_1 = require("./routes/userRoutes");
 const todosRoutes_1 = require("./routes/todosRoutes");
 cloudinary_1.v2.config({
-    api_key: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
     cloud_name: process.env.CLOUD_NAME
 });

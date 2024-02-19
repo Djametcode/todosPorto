@@ -71,20 +71,22 @@ const updateAvatar = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     let file = req.file;
     try {
         const user = yield userModel_1.userModel.findOne({ _id: userId });
+        console.log(user);
         if (!user) {
             return res.status(401).json({ msg: 'Token invalid' });
         }
-        if (file) {
-            const result = yield cloudinary_1.v2.uploader.upload(file.path, {
-                resource_type: 'auto',
-                folder: 'Testing'
-            });
-            const user = yield userModel_1.userModel.findOneAndUpdate({ _id: userId }, { avatar: result.secure_url }, { new: true });
-            return res.status(200).json({ msg: 'Success', user });
+        if (!file) {
+            return res.status(400).json({ msg: 'Please attach file' });
         }
-        return res.status(400).json({ msg: 'Please attach file' });
+        const result = yield cloudinary_1.v2.uploader.upload(file.path, {
+            resource_type: 'auto',
+            folder: 'Testing'
+        });
+        const updatedUser = yield userModel_1.userModel.findOneAndUpdate({ _id: userId }, { avatar: result.secure_url }, { new: true });
+        return res.status(200).json({ msg: 'Success', updatedUser });
     }
     catch (error) {
+        console.log(error);
         return res.status(501).json({ msg: 'Internal Server Error' });
     }
 });

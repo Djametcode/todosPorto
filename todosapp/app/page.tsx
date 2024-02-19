@@ -5,7 +5,11 @@ export default function HomeComponent() {
     <div className=" w-screen h-screen bg-black text-white font-figtree flex flex-col gap-2 justify-center items-center">
       <h1 className=" text-xl">Welcome to todos app</h1>
       <div>
-        <Link href={"/auth/login"} className=" border p-1 rounded-xl">
+        <Link
+          href={"/auth/login"}
+          className=" border p-1 rounded-xl
+        "
+        >
           Login
         </Link>
       </div>

@@ -10,6 +10,8 @@ import { FaPlus } from "react-icons/fa6";
 
 export default function LandingComponent() {
   const [todo, setTodos] = useState<Itodos[]>([]);
+  const [newTodos, setNewTodos] = useState<boolean>(true);
+
   const [count, setCount] = useState<number>(0);
   console.log(todo);
 
@@ -77,6 +79,7 @@ export default function LandingComponent() {
   }, [count]);
   return (
     <div className=" pt-7">
+      {newTodos ? null : null}
       <h1 className=" font-figtree text-xl max-w-[200px] pb-3">
         Manage your activity right now
       </h1>
@@ -108,16 +111,19 @@ export default function LandingComponent() {
             uncompletedTodos.map((item) => {
               return (
                 <div
-                  className=" snap-center z-30 relative shadow-md flex flex-col gap-3 bg-white text-black h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
+                  className=" snap-center z-30 relative shadow-md flex flex-col gap-3 bg-black text-white h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
                   key={item._id}
                 >
                   <div className=" relative z-30 w-[225px] flex flex-col items-start justify-start h-full">
-                    <h1 className=" font-figtree font-bold">{item.title}</h1>
+                    <h1 className=" font-figtree font-bold">
+                      {item.title.slice(0, 1).toUpperCase() +
+                        item.title.slice(1, item.title.length + 1)}
+                    </h1>
                     <p className=" font-montserat text-xs">{item.todos}</p>
                   </div>
                   <div
                     onClick={() => finishTodos(item._id)}
-                    className=" cursor-pointer absolute z-30 top-3 right-3 flex items-center gap-2 bg-slate-50 text-black p-1 rounded-full"
+                    className=" cursor-pointer absolute z-30 top-3 right-3 flex items-center gap-2 bg-green-500 text-black p-1 rounded-full"
                   >
                     <IoCheckmarkCircle size={25} />
                   </div>
@@ -138,12 +144,13 @@ export default function LandingComponent() {
             completedTodos.map((item) => {
               return (
                 <div
-                  className=" relative shadow-md flex flex-col gap-3 bg-slate-50/40 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
+                  className=" relative shadow-md flex flex-col gap-3 bg-slate-50 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
                   key={item._id}
                 >
-                  <div className=" font-figtree w-[225px] h-full flex flex-col items-center justify-center pt-7 pl-3 text-gray-500">
+                  <div className=" font-figtree w-[225px] h-full flex flex-col items-start justify-start pt-7 pl-3 text-gray-500">
                     <h1 className=" text-sm font-bold line-through">
-                      {item.title}
+                      {item.title.slice(0, 1).toUpperCase() +
+                        item.title.slice(1, item.title.length + 1)}
                     </h1>
                     <p className=" text-xs line-through">{item.todos}</p>
                   </div>

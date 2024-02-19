@@ -75,25 +75,28 @@ export const updateAvatar = async (req: Request, res: Response) => {
 
     try {
         const user = await userModel.findOne({ _id: userId })
+        console.log(user);
 
         if (!user) {
             return res.status(401).json({ msg: 'Token invalid' })
         }
 
-        if (file) {
-            const result = await cloudinary.uploader.upload(file.path, {
-                resource_type: 'auto',
-                folder: 'Testing'
-            })
-
-            const user = await userModel.findOneAndUpdate({ _id: userId }, { avatar: result.secure_url }, { new: true })
-
-            return res.status(200).json({ msg: 'Success', user })
+        if (!file) {
+            return res.status(400).json({ msg: 'Please attach file' })
         }
 
-        return res.status(400).json({ msg: 'Please attach file' })
+        const result = await cloudinary.uploader.upload(file.path, {
+            resource_type: 'auto',
+            folder: 'Testing'
+        })
+
+        const updatedUser = await userModel.findOneAndUpdate({ _id: userId }, { avatar: result.secure_url }, { new: true })
+
+        return res.status(200).json({ msg: 'Success', updatedUser })
+
 
     } catch (error) {
+        console.log(error)
         return res.status(501).json({ msg: 'Internal Server Error' })
     }
 }
