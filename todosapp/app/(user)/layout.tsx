@@ -39,7 +39,7 @@ export default function UserRootLandingLayout({
     getCurrentUser();
   }, []);
   return (
-    <div className=" w-screen h-screen bg-slate-200">
+    <div className=" w-screen h-full bg-slate-200">
       {navbar ? (
         <div className=" absolute z-50 top-0 w-full h-full bg-slate-50">
           <div
