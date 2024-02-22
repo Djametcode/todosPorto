@@ -14,6 +14,7 @@ export default function LandingComponent() {
 
   const [count, setCount] = useState<number>(0);
   console.log(todo);
+  const [update, setUpdate] = useState<boolean>(false);
 
   const completedTodos = todo.filter((item) => item.isCompleted === true);
   const uncompletedTodos = todo.filter((item) => item.isCompleted === false);
@@ -39,6 +40,7 @@ export default function LandingComponent() {
 
   const finishTodos = async (todoId: string) => {
     try {
+      setUpdate(true);
       const response = await axios.put(
         `https://todos-porto-backend.vercel.app/api/v18/todos/origin/finish-todo/${todoId}`,
         {},
@@ -50,6 +52,7 @@ export default function LandingComponent() {
       );
       const result = await response.data;
       console.log(result);
+      setUpdate(false);
       setCount(count + 1);
     } catch (error) {
       console.log(error);
@@ -57,6 +60,7 @@ export default function LandingComponent() {
   };
   const unfinishTodos = async (todoId: string) => {
     try {
+      setUpdate(true);
       const response = await axios.put(
         `https://todos-porto-backend.vercel.app/api/v18/todos/origin/unfinish-todo/${todoId}`,
         {},
@@ -69,6 +73,7 @@ export default function LandingComponent() {
       const result = await response.data;
       console.log(result);
       setCount(count + 1);
+      setUpdate(false);
     } catch (error) {
       console.log(error);
     }
@@ -80,13 +85,13 @@ export default function LandingComponent() {
   return (
     <div className=" pt-7">
       {newTodos ? null : null}
-      <h1 className=" font-figtree text-xl max-w-[200px] pb-3">
-        Manage your activity right now
+      <h1 className=" font-figtree text-xl max-w-[200px] pb-3 font-extrabold">
+        Manage your daily activity
       </h1>
       <div className=" pt-2 flex flex-col gap-5">
         <p className=" font-figtree">{todo.length} Task Available</p>
-        <div className=" z-0 relative w-full h-[175px] shadow-sm bg-black rounded-xl">
-          <div className=" flex flex-col gap-1 text-white font-figtree h-full w-full pl-7 pt-9">
+        <div className=" z-0 relative w-full h-[175px] bg-slate-50 rounded-xl">
+          <div className=" flex flex-col gap-1 font-figtree h-full w-full pl-7 pt-9 font-extrabold">
             <h1>Your Task Growth</h1>
             <p className=" text-xs font-montserat">
               {completedTodos.length} task completed
@@ -109,9 +114,28 @@ export default function LandingComponent() {
             </div>
           ) : (
             uncompletedTodos.map((item) => {
-              return (
+              return update ? (
                 <div
-                  className=" snap-center z-30 relative shadow-md flex flex-col gap-3 bg-black text-white h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
+                  className=" snap-center z-30 relative shadow-md flex flex-col gap-3 bg-slate-50/30 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
+                  key={item._id}
+                >
+                  <div className=" relative z-30 w-[225px] flex flex-col items-start justify-start h-full">
+                    <h1 className=" font-figtree font-bold">
+                      {item.title.slice(0, 1).toUpperCase() +
+                        item.title.slice(1, item.title.length + 1)}
+                    </h1>
+                    <p className=" font-montserat text-xs">{item.todos}</p>
+                  </div>
+                  <div
+                    onClick={() => finishTodos(item._id)}
+                    className=" cursor-pointer absolute z-30 top-3 right-3 flex items-center gap-2 bg-green-500 text-black p-1 rounded-full"
+                  >
+                    <IoCheckmarkCircle size={25} />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className=" snap-center z-30 relative shadow-md flex flex-col gap-3 bg-slate-50 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
                   key={item._id}
                 >
                   <div className=" relative z-30 w-[225px] flex flex-col items-start justify-start h-full">
@@ -142,13 +166,14 @@ export default function LandingComponent() {
             </div>
           ) : (
             completedTodos.map((item) => {
-              return (
+              return update ? (
                 <div
                   className=" relative shadow-md flex flex-col gap-3 bg-slate-50 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
                   key={item._id}
                 >
+                  {" "}
                   <div className=" font-figtree w-[225px] h-full flex flex-col items-start justify-start pt-7 pl-3 text-gray-500">
-                    <h1 className=" text-sm font-bold line-through">
+                    <h1 className=" text-base font-bold line-through">
                       {item.title.slice(0, 1).toUpperCase() +
                         item.title.slice(1, item.title.length + 1)}
                     </h1>
@@ -156,7 +181,26 @@ export default function LandingComponent() {
                   </div>
                   <div
                     onClick={() => unfinishTodos(item._id)}
-                    className=" cursor-pointer absolute right-5 top-5"
+                    className=" bg-red-500 p-1 rounded-full cursor-pointer absolute right-3 top-3"
+                  >
+                    <VscDebugRestart size={25} />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className=" relative shadow-md flex flex-col gap-3 bg-slate-50/30 h-[175px] p-5 items-center rounded-xl whitespace-nowrap"
+                  key={item._id}
+                >
+                  <div className=" font-figtree w-[225px] h-full flex flex-col items-start justify-start pt-7 pl-3 text-gray-500">
+                    <h1 className=" text-base font-bold line-through">
+                      {item.title.slice(0, 1).toUpperCase() +
+                        item.title.slice(1, item.title.length + 1)}
+                    </h1>
+                    <p className=" text-xs line-through">{item.todos}</p>
+                  </div>
+                  <div
+                    onClick={() => unfinishTodos(item._id)}
+                    className=" bg-red-500 p-1 rounded-full cursor-pointer absolute right-3 top-3"
                   >
                     <VscDebugRestart size={25} />
                   </div>

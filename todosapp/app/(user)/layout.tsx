@@ -39,7 +39,7 @@ export default function UserRootLandingLayout({
     getCurrentUser();
   }, []);
   return (
-    <div className=" w-screen h-full bg-slate-200">
+    <div className=" w-screen h-screen bg-blue-400">
       {navbar ? (
         <div className=" absolute z-50 top-0 w-full h-full bg-slate-50">
           <div
@@ -105,7 +105,7 @@ export default function UserRootLandingLayout({
       {user.map((item) => {
         return (
           <>
-            <div key={item._id} className=" w-full h-full  pl-6 pr-6">
+            <div key={item._id} className=" w-full h-full  pl-6 pr-6 pt-5">
               <div className=" flex justify-between  font-figtree h-16 items-center">
                 {item.avatar !== "" ? (
                   // eslint-disable-next-line @next/next/no-img-element

@@ -15,7 +15,7 @@ const config: Config = {
       },
       fontFamily: {
         'figtree': ['Figtree', 'sans-serif'],
-        'montserat': ['Montserrat', 'sans-serif']
+        'serat': ['Montserrat', 'sans-serif']
       }
     },
   },

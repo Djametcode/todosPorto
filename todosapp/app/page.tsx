@@ -7,7 +7,7 @@ export default function HomeComponent() {
       <div>
         <Link
           href={"/auth/login"}
-          className=" border p-1 rounded-xl
+          className=" border p-3 rounded-xl
         "
         >
           Login
