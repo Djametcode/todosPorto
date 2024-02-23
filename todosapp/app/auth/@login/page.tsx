@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginComponent() {
   const router = useRouter();
@@ -50,7 +51,10 @@ export default function LoginComponent() {
   };
 
   return (
-    <div className=" flex flex-col gap-10">
+    <div className=" flex flex-col items-center gap-10 w-screen h-screen">
+      <div className=" mt-16">
+        <h1 className=" text-3xl font-figtree p-5">Welcome</h1>
+      </div>
       <form className=" font-figtree flex flex-col w-[375px] gap-5" action="">
         <div className=" flex flex-col gap-2">
           <label className=" text-sm" htmlFor="">
@@ -97,6 +101,14 @@ export default function LoginComponent() {
       <div className=" flex items-center gap-3 p-3 justify-center rounded-lg bg-slate-50 border">
         <FcGoogle size={25} />
         <p className=" text-sm">Sign in With Google</p>
+      </div>
+      <div className=" absolute bottom-10">
+        <p className=" text-sm">
+          Do not have account ?{" "}
+          <Link className=" text-blue-600" href={"/auth"}>
+            create account
+          </Link>
+        </p>
       </div>
     </div>
   );

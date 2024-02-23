@@ -16,14 +16,6 @@ export default function AuthLayout({
         </div>
       </div>
       <div className="">{children}</div>
-      <div className=" absolute bottom-10">
-        <p className=" text-sm">
-          Do not have account ?{" "}
-          <Link className=" text-blue-600" href={"/auth/signup"}>
-            create account
-          </Link>
-        </p>
-      </div>
     </div>
   );
 }
