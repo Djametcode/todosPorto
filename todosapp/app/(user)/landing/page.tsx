@@ -130,9 +130,9 @@ export default function LandingComponent() {
         <div className="  snap-x snap-mandatory flex justify-start gap-5 w-full overflow-scroll">
           {uncompletedTodos.length === 0 ? (
             <div className=" bg-slate-50 shadow-sm rounded-2xl font-figtree h-[175px] flex flex-col gap-1 justify-center items-center w-full">
-              <p className=" text-sm">All Todos finished</p>
+              <p className=" text-lg">All Todos finished</p>
               <div className=" text-xs flex items-center gap-1">
-                create new one <FaPlus size={15} />
+                create new one <FaPlus size={20} />
               </div>
             </div>
           ) : (
@@ -273,7 +273,10 @@ export default function LandingComponent() {
                     <div className=" bg-orange-400 text-white w-[50px] flex items-center justify-center text-sm rounded-xl">
                       <h1>New</h1>
                     </div>
-                    <div className=" text-white">
+                    <div
+                      onClick={() => unfinishTodos(item._id)}
+                      className=" cursor-pointer text-white"
+                    >
                       <GoArrowUpRight size={25} />
                     </div>
                   </div>
