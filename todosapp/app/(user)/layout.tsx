@@ -7,6 +7,8 @@ import { Iuser } from "@/libs/types";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Image from "next/image";
 import { IoMdClose } from "react-icons/io";
+import NavbarComponent from "@/components/navbar";
+import { GoBell } from "react-icons/go";
 
 export default function UserRootLandingLayout({
   children,
@@ -39,7 +41,7 @@ export default function UserRootLandingLayout({
     getCurrentUser();
   }, []);
   return (
-    <div className=" w-screen h-screen bg-blue-400">
+    <div className=" w-screen h-screen bg-slate-50">
       {navbar ? (
         <div className=" absolute z-50 top-0 w-full h-full bg-slate-50">
           <div
@@ -115,12 +117,12 @@ export default function UserRootLandingLayout({
                     className=" w-[45px] h-[45px] rounded-2xl object-cover"
                   />
                 ) : null}
-                <h1>Hello {item.username}</h1>
+                <h1 className=" text-xl">Home</h1>
                 <div
                   onClick={() => setNavbar(!navbar)}
                   className=" cursor-pointer bg-slate-50 p-1 rounded-xl"
                 >
-                  <GiHamburgerMenu size={30} />
+                  <GoBell size={25} />
                 </div>
               </div>
               {children}
@@ -128,6 +130,7 @@ export default function UserRootLandingLayout({
           </>
         );
       })}
+      <NavbarComponent />
     </div>
   );
 }
